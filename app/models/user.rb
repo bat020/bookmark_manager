@@ -7,7 +7,7 @@ class User
 	attr_accessor :password_confirmation
 
 	property :id, Serial
-	property :email, String, required: true #, unique: true
+	property :email, String, required: true, unique: true
 	property :password_digest, Text
 
 	def password=(password)
@@ -16,6 +16,6 @@ class User
 	end
 
 	validates_presence_of :email
-	# validates_uniqueness_of :email
+	validates_uniqueness_of :email
 	validates_confirmation_of :password
 end
