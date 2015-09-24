@@ -8,7 +8,9 @@ gem 'sinatra'
 gem 'sinatra-flash'
 gem 'bcrypt'
 
+
 group :test do
+  gem 'factory_girl'
   gem 'rspec'
   gem 'capybara'
   gem 'database_cleaner'
