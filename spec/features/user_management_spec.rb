@@ -21,14 +21,14 @@ feature 'User sign-up' do
 
   scenario 'with a password that does not match' do
     user = build :user, password_confirmation: 'wrong'
-    expect { sign_up_as(user) }.not_to change(User, :count)
+    expect{sign_up_as(user)}.not_to change(User, :count)
     expect(current_path).to eq '/users'
     expect(page).to have_content 'Password does not match the confirmation'
   end
 
   scenario 'user can\'t sign up without entering an email' do
     user = build :user, email: nil
-    expect { sign_up_as(user) }.not_to change(User, :count)
+    expect{sign_up_as(user)}.not_to change(User, :count)
   end
 
   scenario 'I cannot sign up with an existing email' do
@@ -42,12 +42,7 @@ end
 
 feature 'User can sign in' do
 
-  let(:user) do
-    create :user
-    # User.create(email: 'alice@example.com',
-    #             password: 'oranges'
-    #             password_confirmation: 'oranges')
-  end
+  let(:user) {create :user}
 
   scenario 'with correct credentials' do
     sign_in_as(user)
@@ -60,6 +55,5 @@ feature 'User can sign in' do
     fill_in :password, with: user.password
     click_button 'Sign in'
   end
-
 
 end

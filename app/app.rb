@@ -73,11 +73,11 @@ class BookmarkManager < Sinatra::Base
 
 
   helpers do
+
     def current_user
       User.get(session[:user_id])
     end
-    def authenticate(*args)
-    end
+
   end
 
   # start the server if ruby file executed directly

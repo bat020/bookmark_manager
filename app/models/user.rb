@@ -18,4 +18,12 @@ class User
 	validates_presence_of :email
 	validates_uniqueness_of :email
 	validates_confirmation_of :password
+
+	def self.authenticate(test_email, test_password)
+		user = first(email: test_email)
+		return unless user
+		match = (BCrypt::Password.new(user.password_digest) == test_password)
+		match ? user : nil
+	end
+
 end
