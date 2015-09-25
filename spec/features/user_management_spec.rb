@@ -10,15 +10,6 @@ feature 'User sign-up' do
     expect(User.first.email).to eq('alice@example.com')
   end
 
-  def sign_up_as(user)
-    visit '/users/new'
-    expect(page.status_code).to eq(200)
-    fill_in :email, with: user.email
-    fill_in :password, with: user.password
-    fill_in :password_confirmation, with: user.password_confirmation
-    click_button 'Sign up'
-  end
-
   scenario 'with a password that does not match' do
     user = build :user, password_confirmation: 'wrong'
     expect{sign_up_as(user)}.not_to change(User, :count)
@@ -49,11 +40,16 @@ feature 'User can sign in' do
     expect(page).to have_content "Welcome, #{user.email}"
   end
 
-  def sign_in_as(user)
-    visit '/sessions/new'
-    fill_in :email, with: user.email
-    fill_in :password, with: user.password
-    click_button 'Sign in'
+end
+
+feature 'User signs out' do
+
+  scenario 'while being signed in' do
+    user = create :user
+    sign_in_as(user)
+    click_button 'Sign out'
+    expect(page).to have_content('Goodbye!')
+    expect(page).not_to have_content("Welcome, #{user.email}")
   end
 
 end

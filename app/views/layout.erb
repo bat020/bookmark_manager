@@ -5,9 +5,21 @@
   </head>
 
   <body>
+
     <% if current_user %>
       <p>Welcome, <%= current_user.email %></p>
+      <form action='/sessions' method='post'>
+        <input type='hidden' name='_method' value='delete'>
+        <button type='submit'>Sign out</button>
+      </form>
     <% end %>
+
+    <% if flash[:notice] %>
+    <div id='notice'>
+      <%= flash[:notice].first %>
+    </div>
+    <% end %>
+
     <% if flash[:errors] && !flash[:errors].empty? %>
       <p>Please refer to the following errors below:</p>
       <ul id='errors'>
@@ -16,6 +28,8 @@
         <% end %>
       </ul>
     <% end %>
+
     <%= yield %>
+
   </body>
 </html>
